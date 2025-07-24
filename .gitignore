@@ -1,0 +1,11 @@
+# Large image files - upload separately
+*.png
+Style Guide.pdf
+
+# Debug files (optional)
+debug.html
+simple-debug.html
+test-sheets.html
+
+# Environment files
+.env
