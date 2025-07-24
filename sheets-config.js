@@ -5,8 +5,9 @@ class SheetsAPI {
     constructor() {
         // For client-side, we'll use hardcoded values since process.env isn't available in browsers
         // In production, these should be set via build-time environment variables
-        this.SHEET_ID = '1WVENZ0bUkx256ttYkVpLLGwiu-fFYAh5h94Z6aWI6hM';
-        this.API_KEY = 'AIzaSyBhZa92hFyU3em__0dfH-sc8nhIhQq6-go';
+        // Environment variables - these will be injected by Netlify at build time
+        this.SHEET_ID = window.ENV?.GOOGLE_SHEET_ID || '1WVENZ0bUkx256ttYkVpLLGwiu-fFYAh5h94Z6aWI6hM';
+        this.API_KEY = window.ENV?.GOOGLE_API_KEY || 'REPLACE_WITH_NEW_KEY';
         this.RANGE = 'Dashboard_Data!A:F'; // Updated for AM/PM columns
         
         // Alternative: Use service account (more secure for server-side)
