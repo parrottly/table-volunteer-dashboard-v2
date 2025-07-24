@@ -1,0 +1,342 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #374151; /* Charcoal from brand guide */
+    background-color: #FFFFFF; /* Pure White from brand guide */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+}
+
+header h1 {
+    font-family: 'Rubik Mono One', monospace;
+    color: #5B21B6; /* Deep Purple from brand guide */
+    font-weight: 400; /* Rubik Mono One is already bold */
+    font-size: 2rem;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #5B21B6 0%, #374151 100%); /* Deep Purple to Charcoal */
+    color: white;
+    margin-bottom: 3rem;
+}
+
+.hero h2 {
+    font-family: 'Rubik Mono One', monospace;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.hero-cta-button {
+    display: inline-block;
+    background: #86EFAC; /* Fresh Green from brand guide */
+    color: #374151; /* Charcoal from brand guide */
+    padding: 1rem 2.5rem;
+    border-radius: 8px; /* Per brand guide: 8px rounded corners */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.hero-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Metrics Overview */
+.metrics-overview {
+    margin-bottom: 3rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    border-top: 4px solid;
+}
+
+.stat-card.total {
+    border-top-color: #5B21B6; /* Deep Purple */
+}
+
+.stat-card.current {
+    border-top-color: #86EFAC; /* Fresh Green */
+}
+
+.stat-card.remaining {
+    border-top-color: #374151; /* Charcoal */
+}
+
+.stat-card h3 {
+    color: #374151; /* Charcoal */
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card .number {
+    font-family: 'Rubik Mono One', monospace;
+    font-size: 3rem;
+    font-weight: 400;
+    color: #5B21B6; /* Deep Purple */
+}
+
+/* Volunteer Positions */
+.volunteer-positions {
+    margin-bottom: 3rem;
+}
+
+.volunteer-positions h2 {
+    font-family: 'Rubik Mono One', monospace;
+    text-align: center;
+    color: #5B21B6; /* Deep Purple */
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.position-card {
+    background: white;
+    border-radius: 8px; /* Per brand guide */
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-left: 5px solid #86EFAC; /* Fresh Green */
+    border: 1px solid #D1D5DB; /* Soft Gray border per brand guide */
+}
+
+.position-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.position-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700; /* Bold per brand guide */
+    color: #374151; /* Charcoal */
+}
+
+.position-status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.position-numbers {
+    font-size: 1.1rem;
+    color: #4A5568;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background-color: #E2E8F0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #81C784 0%, #66BB6A 100%);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+/* Call to Action */
+.call-to-action {
+    background: linear-gradient(135deg, #86EFAC 0%, #5B21B6 100%); /* Fresh Green to Deep Purple */
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    border-radius: 8px; /* Per brand guide */
+    margin: 3rem 0;
+}
+
+.cta-content h2 {
+    font-family: 'Rubik Mono One', monospace;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-button {
+    display: inline-block;
+    background: #86EFAC; /* Fresh Green per brand guide */
+    color: #374151; /* Charcoal */
+    padding: 1rem 2.5rem;
+    border-radius: 8px; /* Per brand guide */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* Footer */
+footer {
+    background: #374151; /* Charcoal from brand guide */
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+/* Loading and Error States */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #4A5568;
+}
+
+.error {
+    background: #FED7D7;
+    color: #C53030;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .logo {
+        height: 50px;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+    }
+    
+    .stat-card .number {
+        font-size: 2.5rem;
+    }
+    
+    .position-card {
+        padding: 1.5rem;
+    }
+    
+    .position-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .position-name {
+        font-size: 1.3rem;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .cta-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero {
+        padding: 2rem 0;
+    }
+    
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+    
+    .cta-button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+}

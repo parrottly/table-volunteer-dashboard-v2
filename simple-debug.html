@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .status { padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; font-size: 12px; }
+        button { padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Simple Google Sheets Debug</h1>
+    
+    <button onclick="runTest()">Test Google Sheets Connection</button>
+    
+    <div id="output"></div>
+
+    <script>
+        async function runTest() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<div class="info">Testing connection...</div>';
+            
+            const SHEET_ID = '1WVENZ0bUkx256ttYkVpLLGwiu-fFYAh5h94Z6aWI6hM';
+            const API_KEY = 'AIzaSyBhZa92hFyU3em__0dfH-sc8nhIhQq6-go';
+            const RANGE = 'Dashboard_Data!A:D';
+            
+            try {
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+                
+                output.innerHTML += '<div class="info">Making request to: ' + url + '</div>';
+                
+                const response = await fetch(url);
+                
+                output.innerHTML += '<div class="info">Response status: ' + response.status + '</div>';
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+                
+                const data = await response.json();
+                
+                output.innerHTML += '<div class="success">✅ SUCCESS! Got data from Google Sheets</div>';
+                output.innerHTML += '<div class="info">Raw response:</div>';
+                output.innerHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                // Parse the data
+                if (data.values && data.values.length > 1) {
+                    const parsed = data.values.slice(1)
+                        .filter(row => row[0] && row[1] && row[2])
+                        .map(row => ({
+                            position: row[0],
+                            current: parseInt(row[1]) || 0,
+                            needed: parseInt(row[2]) || 0,
+                            description: row[3] || ''
+                        }));
+                    
+                    output.innerHTML += '<div class="success">✅ Parsed ' + parsed.length + ' volunteer positions</div>';
+                    output.innerHTML += '<pre>' + JSON.stringify(parsed, null, 2) + '</pre>';
+                } else {
+                    output.innerHTML += '<div class="error">❌ No data found in sheet</div>';
+                }
+                
+            } catch (error) {
+                output.innerHTML += '<div class="error">❌ ERROR: ' + error.message + '</div>';
+                console.error('Full error:', error);
+            }
+        }
+        
+        // Auto-run the test
+        window.addEventListener('DOMContentLoaded', runTest);
+    </script>
+</body>
+</html>

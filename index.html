@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Dashboard - The Table Church</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="table-text-black-transparent.png" alt="The Table Church" class="logo">
+            <h1>Volunteer Dashboard</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h2>Help Us Serve Our Community</h2>
+                <p>See where we need volunteers and how you can make a difference</p>
+                <a href="https://thetablechurch.churchcenter.com/people/forms/290717" class="hero-cta-button" target="_blank">
+                    Sign Up to Volunteer
+                </a>
+            </section>
+
+            <section class="metrics-overview">
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <h3>Total Volunteers Needed</h3>
+                        <div class="number" id="total-needed">0</div>
+                    </div>
+                    <div class="stat-card current">
+                        <h3>Current Volunteers</h3>
+                        <div class="number" id="total-current">0</div>
+                    </div>
+                    <div class="stat-card remaining">
+                        <h3>Still Needed</h3>
+                        <div class="number" id="total-remaining">0</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="volunteer-positions">
+                <h2>Volunteer Positions</h2>
+                <div id="positions-container">
+                    <!-- Volunteer positions will be dynamically loaded here -->
+                </div>
+            </section>
+
+            <section class="call-to-action">
+                <div class="cta-content">
+                    <h2>Ready to Serve?</h2>
+                    <p>Join our volunteer team and help make a difference in our community</p>
+                    <a href="https://thetablechurch.churchcenter.com/people/forms/290717" class="cta-button" target="_blank">
+                        Sign Up to Volunteer
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 The Table Church. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="sheets-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

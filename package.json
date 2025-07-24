@@ -1,0 +1,17 @@
+{
+  "name": "volunteer-dashboard",
+  "version": "1.0.0",
+  "description": "The Table Church Volunteer Dashboard",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "google-auth-library": "^9.0.0",
+    "googleapis": "^126.0.1"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

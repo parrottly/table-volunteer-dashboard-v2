@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Google Sheets Connection</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        button { padding: 10px 20px; margin: 10px 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Google Sheets API Test</h1>
+    
+    <div id="status" class="test-result loading">
+        Ready to test...
+    </div>
+
+    <button onclick="testConnection()">Test Google Sheets Connection</button>
+    <button onclick="testWithDifferentRange()">Test Different Sheet Names</button>
+    
+    <h2>Raw Response:</h2>
+    <pre id="raw-response">Click "Test Connection" to see raw data</pre>
+    
+    <h2>Parsed Data:</h2>
+    <pre id="parsed-data">Click "Test Connection" to see parsed data</pre>
+
+    <script>
+        // Test configuration
+        const SHEET_ID = '1WVENZ0bUkx256ttYkVpLLGwiu-fFYAh5h94Z6aWI6hM';
+        const API_KEY = 'AIzaSyBhZa92hFyU3em__0dfH-sc8nhIhQq6-go';
+        
+        // Common sheet names to try
+        const SHEET_RANGES = [
+            'Dashboard_Data!A:D',
+            'Sheet1!A:D',
+            'Volunteers!A:D', 
+            'Dashboard!A:D',
+            'Volunteer Data!A:D',
+            'A:D' // Will use first sheet
+        ];
+
+        async function testConnection() {
+            const statusEl = document.getElementById('status');
+            const rawEl = document.getElementById('raw-response');
+            const parsedEl = document.getElementById('parsed-data');
+            
+            statusEl.className = 'test-result loading';
+            statusEl.textContent = 'Testing connection...';
+            
+            try {
+                // Try the first range
+                const result = await fetchSheetData(SHEET_RANGES[0]);
+                
+                statusEl.className = 'test-result success';
+                statusEl.textContent = 'Success! Connected to Google Sheets';
+                
+                rawEl.textContent = JSON.stringify(result, null, 2);
+                
+                // Parse the data
+                const parsedData = parseSheetData(result.values);
+                parsedEl.textContent = JSON.stringify(parsedData, null, 2);
+                
+            } catch (error) {
+                statusEl.className = 'test-result error';
+                statusEl.textContent = `Error: ${error.message}`;
+                
+                rawEl.textContent = error.toString();
+                parsedEl.textContent = 'Failed to parse data';
+            }
+        }
+
+        async function testWithDifferentRange() {
+            const statusEl = document.getElementById('status');
+            const rawEl = document.getElementById('raw-response');
+            
+            statusEl.className = 'test-result loading';
+            statusEl.textContent = 'Testing different sheet names...';
+            
+            for (const range of SHEET_RANGES) {
+                try {
+                    statusEl.textContent = `Trying: ${range}`;
+                    const result = await fetchSheetData(range);
+                    
+                    statusEl.className = 'test-result success';
+                    statusEl.textContent = `Success with range: ${range}`;
+                    
+                    rawEl.textContent = JSON.stringify(result, null, 2);
+                    return;
+                    
+                } catch (error) {
+                    console.log(`Failed with ${range}:`, error.message);
+                }
+            }
+            
+            statusEl.className = 'test-result error';
+            statusEl.textContent = 'All ranges failed. Check sheet permissions and format.';
+        }
+
+        async function fetchSheetData(range) {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
+            
+            const response = await fetch(url);
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorText}`);
+            }
+            
+            return await response.json();
+        }
+
+        function parseSheetData(values) {
+            if (!values || values.length < 2) {
+                throw new Error('No data found in sheet');
+            }
+
+            const headers = values[0];
+            const rows = values.slice(1);
+            
+            return rows
+                .filter(row => row[0] && row[1] && row[2])
+                .map(row => ({
+                    position: row[0]?.toString().trim() || '',
+                    current: parseInt(row[1]) || 0,
+                    needed: parseInt(row[2]) || 0,
+                    description: row[3]?.toString().trim() || ''
+                }))
+                .filter(item => item.position && item.needed > 0);
+        }
+    </script>
+</body>
+</html>
