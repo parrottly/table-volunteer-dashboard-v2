@@ -5,9 +5,9 @@ class SheetsAPI {
     constructor() {
         // For client-side, we'll use hardcoded values since process.env isn't available in browsers
         // In production, these should be set via build-time environment variables
-        // Environment variables - these will be injected by Netlify at build time
-        this.SHEET_ID = window.ENV?.GOOGLE_SHEET_ID || '1WVENZ0bUkx256ttYkVpLLGwiu-fFYAh5h94Z6aWI6hM';
-        this.API_KEY = window.ENV?.GOOGLE_API_KEY || 'YOUR_NEW_API_KEY_HERE';
+        // Use server-side function for security - no API key in client code
+        this.SHEET_ID = '1WVENZ0bUkx256ttYkVpLLGwiu-fFYAh5h94Z6aWI6hM';
+        this.API_KEY = null; // Will use Netlify Functions instead
         this.RANGE = 'Dashboard_Data!A:F'; // Updated for AM/PM columns
         
         // Alternative: Use service account (more secure for server-side)
@@ -96,11 +96,21 @@ class SheetsAPI {
             .filter(item => item.position && item.needed > 0); // Only valid positions
     }
 
-    // Public method to fetch volunteer data
+    // Public method to fetch volunteer data - now uses server-side function
     async getVolunteerData() {
         try {
-            // Try API key method first (simpler)
-            return await this.fetchDataWithAPIKey();
+            // Use Netlify Function (secure server-side)
+            const response = await fetch('/.netlify/functions/sheets');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const result = await response.json();
+            
+            if (result.error) {
+                throw new Error(result.error);
+            }
+            
+            return result.data;
         } catch (error) {
             console.error('Failed to fetch from Google Sheets:', error);
             // Return sample data as fallback
